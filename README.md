@@ -22,7 +22,7 @@ pnpm add ts-relay-cursor-paging
 
 Open graphql playground in your browser port 4000/graphql
 
-[![Edit ts-relay-cursor-paging](https://codesandbox.io/static/img/play-codesandbox.svg)](https://githubbox.com/productdevbook/productdevbook/tree/main/examples/graphql/relay-cursor-paging)
+[![Edit ts-relay-cursor-paging](https://codesandbox.io/static/img/play-codesandbox.svg)](https://githubbox.com/productdevbookcom/ts-relay-cursor-paging/tree/main/playground)
 
 ### Docs
 ```ts
