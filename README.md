@@ -174,6 +174,15 @@ server.listen(4000, () => {
 ## Inspiration
 Codes in this build are inspired by [pothos](https://github.com/hayes/pothos) and from there the codes were copied. Thanks you for your great work.
 
+## Sponsors
+
+<p align="center">
+  <a href="https://cdn.jsdelivr.net/gh/oku-ui/static/sponsors/sponsors.svg">
+    <img alt="sponsors" src='https://cdn.jsdelivr.net/gh/oku-ui/static/sponsors/sponsors.svg'/>
+  </a>
+</p>
+
+
  ## License
 
 MIT License © 2022-PRESENT [productdevbook](https://github.com/productdevbook)
