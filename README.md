@@ -1,40 +1,178 @@
-# Typescript Bundle Template
+# TS Relay Cursor Paging
 
-![Typescript Bundle Template](https://github.com/productdevbookcom/assets/blob/main/ts-bundle-template.jpg?raw=true)
+![TS Relay Cursor Paging](https://github.com/productdevbookcom/ts-relay-cursor-paging/blob/main/.github/assets/urql-storage-capacitor.png?raw=true)
+
+<br/>
+
+### ts-relay-cursor-paging [![npm](https://img.shields.io/npm/v/ts-relay-cursor-paging.svg)](https://npmjs.com/package/ts-relay-cursor-paging)
+<br/>
+
+## Description
+Simple relay cursor paging for graphql
+
+## Installation
+
+```bash
+pnpm add ts-relay-cursor-paging
+```
 
 
-This is a template for creating a Typescript bundle. It is based on the [Typescript](https://www.typescriptlang.org/) compiler with the [Tsup](https://github.com/egoist/tsup) bundler.
+## Demo 
 
-## Features
+Open graphql playground in your browser port 4000/graphql
 
-- [x] [Typescript](https://www.typescriptlang.org/)
-- [x] [Tsup](https://github.com/egoist/tsup)
-- [x] [ESLint](https://eslint.org/) with [Antfu's ESLint Config](https://github.com/antfu/eslint-config)
-- [x] [Bumpp](https://github.com/antfu/bumpp) github changelog generator
-- [x] [Vitest](https://vitest.dev/)
-- [x] [Pnpm](https://pnpm.io/)
-- [x] [GitHub Actions]()
-- [x] [NPM Local Registry]()
-- [x] [Renovate]()
+[![Edit ts-relay-cursor-paging](https://codesandbox.io/static/img/play-codesandbox.svg)](https://githubbox.com/productdevbook/productdevbook/tree/main/examples/graphql/relay-cursor-paging)
 
+### Docs
+```ts
+import { offsetForArgs } from 'ts-relay-cursor-paging'
+import { connectionFromArraySlice } from 'graphql-relay'
+
+const
+  {
+    limit, offset, expectedSize,
+    hasNextPage, hasPreviousPage
+  } = offsetForArgs({
+    args: {
+      first: _args.first,
+      last: _args.last,
+      after: _args.after,
+      before: _args.before,
+    },
+    defaultSize: 10,
+    maxSize: 100,
+  })
+
+// ... connection logic db or orm used ...
+
+const page = connectionFromArraySlice(data, _args, {
+  arrayLength: data.length,
+  sliceStart: offset,
+})
+
+return {
+  edges: page.edges,
+  pageInfo: {
+    ...page.pageInfo,
+    totalPageCount: expectedSize,
+  },
+}
+```
 
 ## Usage
 
-1. To use this template, click the "Use this template" button above.
-2. Clone the repository to your local machine.
-3. Run `pnpm install` to install the dependencies.
-4. Run `pnpm build` to build the bundle.
-5. Run `pnpm start` to start the bundle.
-6. Run `pnpm lint` to lint the code. (You can also run `pnpm lint:fix` to fix the linting errors.)
-7. Run `pnpm test` to run the tests. (You can also run `pnpm test:watch` to run the tests in watch mode.)
-8. Run `pnpm release` to bump the version. Terminal will ask you to select the version type. And then it will automatically commit and push the changes. GitHub Actions will automatically publish git tags. NPM local registry will automatically publish the package.
+<details><summary>Graphql Yoga 3</summary>
 
-## Configuration
+```ts
+import { createServer } from 'node:http'
+import { offsetForArgs } from 'ts-relay-cursor-paging'
+import { connectionFromArraySlice } from 'graphql-relay'
+import { GraphQLError } from 'graphql'
+import { createSchema, createYoga } from 'graphql-yoga'
 
-### Renovate
+const data = [
+  {
+    id: 1,
+    name: 'Library 1',
+  },
+  {
+    id: 2,
+    name: 'Library 2',
+  },
+  {
+    id: 3,
+    name: 'Library 3',
+  },
+  {
+    id: 4,
+    name: 'Library 4',
+  },
+]
 
-[Setup Github App](https://github.com/apps/renovate) for Renovate.
+export const schema = createSchema({
+  typeDefs: /* GraphQL */ `
+    scalar Cursor
 
-## License
+    type PageInfo {
+      hasNextPage: Boolean
+      hasPreviousPage: Boolean
+      startCursor: Cursor
+      endCursor: Cursor
+      totalPageCount: Int
+    }
 
-This project is licensed under the [MIT License](LICENSE).
+    type Library {
+      id: ID!
+      name: String!
+    }
+
+    type LibraryEdge {
+        cursor: String!
+        node: Library!
+    }
+
+    type LibraryConnection {
+      edges: [LibraryEdge!]!
+      pageInfo: PageInfo!
+    }
+ 
+    type Query {
+      libraries(
+        first: Int
+        after: Cursor
+        last: Int
+        before: Cursor
+      ): LibraryConnection  
+    }
+  `,
+  resolvers: {
+    Query: {
+      libraries: async (_parent, _args, context, _info) => {
+        const { limit, offset, expectedSize } = offsetForArgs({
+          args: {
+            first: _args.first,
+            last: _args.last,
+            after: _args.after,
+            before: _args.before,
+          },
+        })
+
+        if (!data)
+          throw new GraphQLError('No libraries found')
+
+        const page = connectionFromArraySlice(data, _args, {
+          arrayLength: data.length,
+          sliceStart: offset,
+        })
+        return {
+          edges: page.edges,
+          pageInfo: {
+            ...page.pageInfo,
+            totalPageCount: expectedSize,
+          },
+        }
+      },
+    },
+  },
+})
+
+// Create a Yoga instance with a GraphQL schema.
+const yoga = createYoga({ schema })
+
+// Pass it into a server to hook into request handlers.
+const server = createServer(yoga)
+
+// Start the server and you're done!
+server.listen(4000, () => {
+  console.info('Server is running on http://localhost:4000/graphql')
+})
+```
+</details>
+</br>
+
+## Inspiration
+Codes in this build are inspired by [pothos](https://github.com/hayes/pothos) and from there the codes were copied. Thanks you for your great work.
+
+ ## License
+
+MIT License © 2022-PRESENT [productdevbook](https://github.com/productdevbook)

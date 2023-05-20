@@ -1,19 +1,26 @@
 {
-  "name": "ts-bundle-template",
-  "version": "0.0.0",
+  "name": "ts-relay-cursor-paging",
+  "version": "1.0.0",
   "packageManager": "pnpm@8.0.0",
-  "description": "add description",
-  "author": "add author",
+  "description": "Relay Cursor Paging for GraphQL",
+  "author": "Mehmet @productdevbook",
   "license": "MIT",
   "funding": "https://github.com/sponsors/productdevbook",
-  "homepage": "https://github.com/productdevbookcom/ts-bundle-template",
+  "homepage": "https://github.com/productdevbookcom/ts-relay-cursor-paging",
   "repository": {
     "type": "git",
-    "url": "https://github.com/productdevbookcom/ts-bundle-template.git"
+    "url": "https://github.com/productdevbookcom/ts-relay-cursor-paging.git"
   },
-  "bugs": "https://github.com/productdevbookcom/ts-bundle-template/issues",
+  "bugs": "https://github.com/productdevbookcom/ts-relay-cursor-paging/issues",
   "keywords": [
-    "add keywords"
+    "relay",
+    "cursor",
+    "paging",
+    "pagination",
+    "relay-cursor-paging",
+    "relay-cursor-pagination",
+    "relay-pagination",
+    "relay-paging"
   ],
   "exports": {
     ".": {
@@ -41,6 +48,9 @@
     "lint:fix": "eslint . --fix",
     "test": "vitest",
     "test:watch": "vitest --watch"
+  },
+  "dependencies": {
+    "graphql-relay": "^0.10.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.38.6",
