@@ -2,10 +2,11 @@
 
 ![TS Relay Cursor Paging](https://github.com/productdevbookcom/ts-relay-cursor-paging/blob/main/.github/assets/urql-storage-capacitor.png?raw=true)
 
-<br/>
-
-### ts-relay-cursor-paging [![npm](https://img.shields.io/npm/v/ts-relay-cursor-paging.svg)](https://npmjs.com/package/ts-relay-cursor-paging)
-<br/>
+ <p>
+  <a href="https://www.npmjs.com/package/ts-relay-cursor-paging"><img src="https://img.shields.io/npm/v/ts-relay-cursor-paging.svg?style=flat&colorA=18181B&colorB=28CF8D" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/ts-relay-cursor-paging"><img src="https://img.shields.io/npm/dm/ts-relay-cursor-paging.svg?style=flat&colorA=18181B&colorB=28CF8D" alt="Downloads"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/ts-relay-cursor-paging/ts-relay-cursor-paging.svg?style=flat&colorA=18181B&colorB=28CF8D" alt="License"></a>
+ </p>
 
 ## Description
 Simple relay cursor paging for graphql
