@@ -61,7 +61,7 @@ export const schema = createSchema({
   `,
   resolvers: {
     Query: {
-      libraries: async (_parent: any, _args: any, _context: any, _info: any) => {
+      libraries: async (_parent, _args, _context, _info) => {
         const { offset, expectedSize, hasNextPage } = offsetForArgs({
           args: {
             first: _args.first,
