@@ -7,27 +7,27 @@ const DEFAULT_SIZE = 20
 export interface OffsetForArgsResult {
   /**
    * The offset to use for the query
-  */
+   */
   offset: number
   /**
    * The limit to use for the query
-  */
+   */
   limit: number
   /**
    * Whether there is a previous page
-  */
+   */
   hasPreviousPage: boolean
   /**
    * The expected size of the result
    * This is the size of the result without the extra item
    * that is used to determine if there is a next page
-  */
+   */
   expectedSize: number
   /**
    * Whether there is a next page
-    * @param resultSize The size of the result
-    * @returns Whether there is a next page
-  */
+   * @param resultSize The size of the result
+   * @returns Whether there is a next page
+   */
   hasNextPage: (resultSize: number) => boolean
 }
 
