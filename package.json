@@ -1,8 +1,8 @@
 {
   "name": "ts-relay-cursor-paging",
+  "type": "module",
   "version": "1.0.0",
   "packageManager": "pnpm@8.8.0",
-  "type": "module",
   "description": "Relay Cursor Paging for GraphQL",
   "author": "Mehmet @productdevbook",
   "license": "MIT",
@@ -25,9 +25,9 @@
   ],
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     }
   },
   "main": "./dist/index.js",

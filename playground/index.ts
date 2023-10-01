@@ -61,8 +61,8 @@ export const schema = createSchema({
   `,
   resolvers: {
     Query: {
-      libraries: async (_parent, _args, context, _info) => {
-        const { limit, offset, expectedSize, hasNextPage, hasPreviousPage } = offsetForArgs({
+      libraries: async (_parent: any, _args: any, _context: any, _info: any) => {
+        const { offset, expectedSize, hasNextPage } = offsetForArgs({
           args: {
             first: _args.first,
             last: _args.last,
@@ -70,6 +70,8 @@ export const schema = createSchema({
             before: _args.before,
           },
         })
+
+        // eslint-disable-next-line no-console
         console.log(hasNextPage(data.length))
 
         if (!data)
@@ -99,5 +101,6 @@ const server = createServer(yoga)
 
 // Start the server and you're done!
 server.listen(4000, () => {
+  // eslint-disable-next-line no-console
   console.info('Server is running on http://localhost:4000/graphql')
 })
