@@ -4,12 +4,14 @@
   "description": "",
   "author": "",
   "license": "ISC",
+  "type": "module",
   "keywords": [],
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "esno": "^0.17.0",
     "graphql-yoga": "^4.0.5",
     "ts-relay-cursor-paging": "workspace:^"
   }

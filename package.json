@@ -2,7 +2,7 @@
   "name": "ts-relay-cursor-paging",
   "type": "module",
   "version": "1.1.1",
-  "packageManager": "pnpm@8.8.0",
+  "packageManager": "pnpm@8.10.0",
   "description": "Relay Cursor Paging for GraphQL",
   "author": "Mehmet @productdevbook",
   "license": "MIT",
@@ -26,19 +26,17 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.mts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js"
     }
   },
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "engines": {
-    "node": ">=16",
-    "pnpm": ">=8"
+    "node": ">=20"
   },
   "scripts": {
     "build": "tsup",
@@ -51,8 +49,8 @@
     "test:watch": "vitest --watch",
     "coverage": "vitest run --coverage"
   },
-  "dependencies": {
-    "graphql-relay": "^0.10.0"
+  "peerDependencies": {
+    "graphql": "^16.8.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "1.0.0-beta.18",
@@ -62,7 +60,8 @@
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
-    "vitest": "^0.34.6"
+    "vitest": "^0.34.6",
+    "graphql": "^16.8.1"
   },
   "publishConfig": {
     "access": "public"

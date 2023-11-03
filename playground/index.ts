@@ -1,28 +1,20 @@
 import { createServer } from 'node:http'
-import { offsetForArgs } from 'ts-relay-cursor-paging'
-import { connectionFromArraySlice } from 'graphql-relay'
+import { resolveOffsetConnection } from 'ts-relay-cursor-paging'
 import { GraphQLError } from 'graphql'
 import { createSchema, createYoga } from 'graphql-yoga'
 
-const data = [
-  {
-    id: 1,
-    name: 'Library 1',
-  },
-  {
-    id: 2,
-    name: 'Library 2',
-  },
-  {
-    id: 3,
-    name: 'Library 3',
-  },
-  {
-    id: 4,
-    name: 'Library 4',
-  },
-]
+function datasLine() {
+  const datas = []
 
+  for (let i = 0; i < 100; i++) {
+    datas.push({
+      id: i,
+      name: `Library ${i}`,
+    })
+  }
+
+  return datas
+}
 export const schema = createSchema({
   typeDefs: /* GraphQL */ `
     scalar Cursor
@@ -62,30 +54,24 @@ export const schema = createSchema({
   resolvers: {
     Query: {
       libraries: async (_parent, _args, _context, _info) => {
-        const { offset, expectedSize, hasNextPage } = offsetForArgs({
-          args: {
-            first: _args.first,
-            last: _args.last,
-            after: _args.after,
-            before: _args.before,
-          },
+        const generator = datasLine()
+
+        async function resolveData({ offset, limit }: { offset: number; limit: number }) {
+          const slicedData = generator.slice(offset, offset + limit)
+          return slicedData
+        }
+
+        const datas = await resolveOffsetConnection({ args: _args }, ({ limit, offset }) => {
+          return resolveData({ limit, offset })
         })
 
-        // eslint-disable-next-line no-console
-        console.log(hasNextPage(data.length))
-
-        if (!data)
+        if (!generator)
           throw new GraphQLError('No libraries found')
 
-        const page = connectionFromArraySlice(data, _args, {
-          arrayLength: data.length,
-          sliceStart: offset,
-        })
         return {
-          edges: page.edges,
+          edges: datas.edges,
           pageInfo: {
-            ...page.pageInfo,
-            totalPageCount: expectedSize,
+            ...datas.pageInfo,
           },
         }
       },
@@ -100,7 +86,7 @@ const yoga = createYoga({ schema })
 const server = createServer(yoga)
 
 // Start the server and you're done!
-server.listen(4000, () => {
+server.listen(3100, () => {
   // eslint-disable-next-line no-console
-  console.info('Server is running on http://localhost:4000/graphql')
+  console.info('Server is running on http://localhost:3100/graphql')
 })
