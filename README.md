@@ -31,8 +31,11 @@ import { connectionFromArraySlice } from 'graphql-relay'
 
 const
   {
-    limit, offset, expectedSize,
-    hasNextPage, hasPreviousPage
+    limit,
+    offset,
+    expectedSize,
+    hasNextPage,
+    hasPreviousPage
   } = offsetForArgs({
     args: {
       first: _args.first,

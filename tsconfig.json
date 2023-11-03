@@ -1,18 +1,18 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Node 18",
+  "display": "Node 20",
   "_version": "2.0.0",
   "compilerOptions": {
-    "target": "es2022",
+    "target": "ESNext",
     "lib": [
-      "es2023"
+      "ESNext"
     ],
-    "module": "ES2022",
+    "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
+    "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
     "skipLibCheck": true
   }
 }

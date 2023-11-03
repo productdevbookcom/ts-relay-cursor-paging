@@ -9,8 +9,8 @@ const external = [
 export default <Options>{
   entryPoints: ['src/index.ts'],
   outDir: 'dist',
-  target: 'node16',
-  format: ['esm', 'cjs'],
+  target: 'esnext',
+  format: ['esm'],
   sourcemap: true,
   clean: true,
   dts: true,
