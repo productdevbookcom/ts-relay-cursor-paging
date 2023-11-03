@@ -1,7 +1,7 @@
 {
   "name": "ts-relay-cursor-paging",
   "type": "module",
-  "version": "1.1.1",
+  "version": "2.0.0-alpha.1",
   "packageManager": "pnpm@8.10.0",
   "description": "Relay Cursor Paging for GraphQL",
   "author": "Mehmet @productdevbook",
@@ -43,8 +43,8 @@
     "dev": "tsup --watch",
     "prepublishOnly": "pnpm run build",
     "release": "pnpm build && bumpp --commit --push --tag && pnpm publish",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "eslint . --cache",
+    "lint:fix": "eslint . --cache --fix",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "coverage": "vitest run --coverage"
@@ -53,15 +53,15 @@
     "graphql": "^16.8.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "1.0.0-beta.18",
+    "@antfu/eslint-config": "^1.1.0",
     "@vitest/coverage-v8": "^0.34.6",
     "bumpp": "^9.2.0",
-    "eslint": "^8.50.0",
+    "eslint": "^8.52.0",
+    "graphql": "^16.8.1",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
-    "vite": "^4.4.9",
-    "vitest": "^0.34.6",
-    "graphql": "^16.8.1"
+    "vite": "^4.5.0",
+    "vitest": "^0.34.6"
   },
   "publishConfig": {
     "access": "public"
