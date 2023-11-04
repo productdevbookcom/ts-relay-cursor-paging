@@ -41,14 +41,14 @@ export const schema = createSchema({
       edges: [LibraryEdge!]!
       pageInfo: PageInfo!
     }
- 
+
     type Query {
       libraries(
         first: Int
         after: Cursor
         last: Int
         before: Cursor
-      ): LibraryConnection  
+      ): LibraryConnection
     }
   `,
   resolvers: {

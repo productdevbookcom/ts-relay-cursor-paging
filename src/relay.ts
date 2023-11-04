@@ -46,13 +46,14 @@ export function offsetForArgs(options: ResolveOffsetConnectionOptions) {
 export async function resolveOffsetConnection<
   T,
   U extends Promise<readonly T[] | null> | readonly T[] | null,
+  I,
 >(
   options: ResolveOffsetConnectionOptions,
   resolve: (params: {
     offset: number
     limit: number
   }) => U & (MaybePromise<readonly T[] | null> | null),
-): Promise<Connection<T>> {
+): Promise<Connection<T, I>> {
   const { limit, offset, expectedSize, hasPreviousPage, hasNextPage } = offsetForArgs(options)
 
   const nodes = (await resolve({ offset, limit })) as T[] | null
@@ -90,10 +91,10 @@ export function offsetToCursor(offset: number): string {
   return Buffer.from(`${OFFSET_CURSOR_PREFIX}${offset}`).toString('base64')
 }
 
-export function resolveArrayConnection<T>(
+export function resolveArrayConnection<T, I>(
   options: ResolveArrayConnectionOptions,
   array: readonly T[],
-): Connection<T> {
+): Connection<T, I> {
   const { limit, offset, expectedSize, hasPreviousPage, hasNextPage } = offsetForArgs(options)
 
   const nodes = array.slice(offset, offset + limit)
@@ -149,10 +150,11 @@ type NodeType<T> = T extends Promise<(infer N)[] | null> | (infer N)[] | null ? 
 
 export async function resolveCursorConnection<
   U extends Promise<readonly unknown[] | null> | readonly unknown[] | null,
+  I,
 >(
   options: ResolveCursorConnectionOptions<NodeType<U>>,
   resolve: (params: ResolveCursorConnectionArgs) => U,
-): Promise<Connection<NodeType<U>>> {
+): Promise<Connection<NodeType<U>, I>> {
   const { before, after, limit, inverted, expectedSize, hasPreviousPage, hasNextPage }
     = parseCurserArgs(options)
 

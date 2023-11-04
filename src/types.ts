@@ -65,9 +65,10 @@ export interface ResolveArrayConnectionOptions {
 /**
  * A type designed to be exposed as a `Connection` over GraphQL.
  */
-export interface Connection<T> {
+export interface Connection<T, I> {
   edges: Array<Edge<T>>
   pageInfo: PageInfo
+  context?: I
 }
 
 /**
