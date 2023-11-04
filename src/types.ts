@@ -68,7 +68,9 @@ export interface ResolveArrayConnectionOptions {
 export interface Connection<T, I> {
   edges: Array<Edge<T>>
   pageInfo: PageInfo
-  context?: I
+  context?: {
+    [key: string]: I
+  }
 }
 
 /**

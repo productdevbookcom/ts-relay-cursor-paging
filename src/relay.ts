@@ -53,6 +53,7 @@ export async function resolveOffsetConnection<
     offset: number
     limit: number
   }) => U & (MaybePromise<readonly T[] | null> | null),
+  context?: (params: ResolveCursorConnectionArgs) => I,
 ): Promise<Connection<T, I>> {
   const { limit, offset, expectedSize, hasPreviousPage, hasNextPage } = offsetForArgs(options)
 
@@ -77,6 +78,10 @@ export async function resolveOffsetConnection<
       hasPreviousPage,
       hasNextPage: hasNextPage(nodes.length),
     },
+    context: {
+      ...context?.({ before: undefined, after: undefined, limit, inverted: false }) ?? {},
+      ...(nodes as any).context ?? {},
+    },
   }
 }
 
@@ -94,6 +99,7 @@ export function offsetToCursor(offset: number): string {
 export function resolveArrayConnection<T, I>(
   options: ResolveArrayConnectionOptions,
   array: readonly T[],
+  context?: (params: ResolveCursorConnectionArgs) => I,
 ): Connection<T, I> {
   const { limit, offset, expectedSize, hasPreviousPage, hasNextPage } = offsetForArgs(options)
 
@@ -116,6 +122,10 @@ export function resolveArrayConnection<T, I>(
       endCursor: offsetToCursor(offset + trimmed.length - 1),
       hasPreviousPage,
       hasNextPage: hasNextPage(nodes.length),
+    },
+    context: {
+      ...context?.({ before: undefined, after: undefined, limit, inverted: false }) ?? {},
+      ...(nodes as any).context ?? {},
     },
   }
 }
@@ -154,6 +164,7 @@ export async function resolveCursorConnection<
 >(
   options: ResolveCursorConnectionOptions<NodeType<U>>,
   resolve: (params: ResolveCursorConnectionArgs) => U,
+  context?: (params: ResolveCursorConnectionArgs) => I,
 ): Promise<Connection<NodeType<U>, I>> {
   const { before, after, limit, inverted, expectedSize, hasPreviousPage, hasNextPage }
     = parseCurserArgs(options)
@@ -191,6 +202,10 @@ export async function resolveCursorConnection<
       endCursor,
       hasPreviousPage: hasPreviousPage(nodes.length),
       hasNextPage: hasNextPage(nodes.length),
+    },
+    context: {
+      ...context?.({ before, after, limit, inverted }) ?? {},
+      ...(nodes as any).context ?? {},
     },
   }
 }
