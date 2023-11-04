@@ -24,21 +24,72 @@ Open graphql playground in your browser port 4000/graphql
 
 [![Edit ts-relay-cursor-paging](https://codesandbox.io/static/img/play-codesandbox.svg)](https://githubbox.com/productdevbookcom/ts-relay-cursor-paging/tree/main/playground)
 
-### Docs
+## Docs
+
+### resolveOffsetConnection
+
 ```ts
 import { resolveOffsetConnection } from 'ts-relay-cursor-paging'
 
-async function resolveData({ offset, limit }: { offset: number; limit: number }) {
-  const slicedData = generator.slice(offset, offset + limit)
-  return slicedData
-}
+resolveOffsetConnection({ args }, ({ limit, offset }) => {
+  const items = []
 
-const datas = await resolveOffsetConnection({ args: _args }, ({ limit, offset }) => {
-  return resolveData({ limit, offset })
+  for (let i = offset; i < Math.min(offset + limit, 200); i += 1)
+    items.push(new NumberThing(i))
+
+  return items
 })
 ```
 
-...soon new features
+### resolveCursorConnection
+```ts
+import { resolveCursorConnection } from 'ts-relay-cursor-paging'
+
+const objects: { id: number }[] = []
+
+for (let i = 0; i < 100; i += 1)
+  objects.push({ id: i + 1 })
+
+function queryWithCursor(limit: number, inverted: boolean, after?: string, before?: string) {
+  const list = objects.filter(({ id }) => {
+    if (before && id >= Number.parseInt(before, 10))
+      return false
+
+    if (after && id <= Number.parseInt(after, 10))
+      return false
+
+    return true
+  })
+
+  return (inverted ? list.reverse() : list).slice(0, limit)
+}
+
+// resolveCursorConnection
+
+resolveCursorConnection(
+  {
+    defaultSize: 5,
+    maxSize: 8,
+    args,
+    toCursor: obj => obj.id.toString(),
+  },
+  ({ before, after, inverted, limit }: ResolveCursorConnectionArgs) =>
+    queryWithCursor(limit, inverted, after, before),
+)
+```
+
+### resolveArrayConnection
+
+ ```ts
+ import { resolveArrayConnection } from 'ts-relay-cursor-paging'
+
+ const numbers: BatchLoadableNumberThing[] = []
+
+ for (let i = 0; i < 200; i += 1)
+   numbers.push(new BatchLoadableNumberThing(i))
+
+ resolveArrayConnection({ args }, numbers)
+```
 
 ## Usage
 
@@ -142,6 +193,10 @@ server.listen(3100, () => {
 
 ## Inspiration
 Codes in this build are inspired by [pothos](https://github.com/hayes/pothos) and from there the codes were copied. Thanks you for your great work.
+
+## Credits
+- [pothos](https://github.com/hayes/pothos)
+- [graphql-relay-js](https://github.com/graphql/graphql-relay-js)
 
 ## Sponsors
 
