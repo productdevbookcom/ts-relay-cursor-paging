@@ -83,10 +83,10 @@ resolveCursorConnection(
  ```ts
  import { resolveArrayConnection } from 'ts-relay-cursor-paging'
 
- const numbers: BatchLoadableNumberThing[] = []
+ const numbers: { id: number }[] = []
 
  for (let i = 0; i < 200; i += 1)
-   numbers.push(new BatchLoadableNumberThing(i))
+   numbers.push({ id: i + 1 })
 
  resolveArrayConnection({ args }, numbers)
 ```
