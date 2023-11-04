@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "esno": "^0.17.0",
-    "graphql-yoga": "^4.0.5",
+    "graphql-yoga": "^5.0.0",
     "ts-relay-cursor-paging": "workspace:^"
   }
 }
