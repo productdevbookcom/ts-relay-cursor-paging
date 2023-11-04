@@ -26,42 +26,19 @@ Open graphql playground in your browser port 4000/graphql
 
 ### Docs
 ```ts
-import { offsetForArgs } from 'ts-relay-cursor-paging'
-import { connectionFromArraySlice } from 'graphql-relay'
+import { resolveOffsetConnection } from 'ts-relay-cursor-paging'
 
-const
-  {
-    limit,
-    offset,
-    expectedSize,
-    hasNextPage,
-    hasPreviousPage
-  } = offsetForArgs({
-    args: {
-      first: _args.first,
-      last: _args.last,
-      after: _args.after,
-      before: _args.before,
-    },
-    defaultSize: 10,
-    maxSize: 100,
-  })
-
-// ... connection logic db or orm used ...
-
-const page = connectionFromArraySlice(data, _args, {
-  arrayLength: data.length,
-  sliceStart: offset,
-})
-
-return {
-  edges: page.edges,
-  pageInfo: {
-    ...page.pageInfo,
-    totalPageCount: expectedSize,
-  },
+async function resolveData({ offset, limit }: { offset: number; limit: number }) {
+  const slicedData = generator.slice(offset, offset + limit)
+  return slicedData
 }
+
+const datas = await resolveOffsetConnection({ args: _args }, ({ limit, offset }) => {
+  return resolveData({ limit, offset })
+})
 ```
+
+...soon new features
 
 ## Usage
 
