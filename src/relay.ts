@@ -152,7 +152,7 @@ export async function resolveCursorConnection<
 >(
   options: ResolveCursorConnectionOptions<NodeType<U>>,
   resolve: (params: ResolveCursorConnectionArgs) => U,
-): Promise<Connection<U>> {
+): Promise<Connection<NodeType<U>>> {
   const { before, after, limit, inverted, expectedSize, hasPreviousPage, hasNextPage }
     = parseCurserArgs(options)
 
