@@ -20,10 +20,10 @@ export function offsetForArgs(options: ResolveOffsetConnectionOptions) {
   let startOffset = after ? afterOffset + 1 : 0
   let endOffset = before ? Math.max(beforeOffset, startOffset) : Number.POSITIVE_INFINITY
 
-  if (first != null && !before)
+  if (first != null)
     endOffset = Math.min(endOffset, startOffset + first)
 
-  if (last != null && !after) {
+  if (last != null) {
     if (endOffset === Number.POSITIVE_INFINITY)
       throw new Error('Argument "last" can only be used in combination with "before" or "first"')
 
