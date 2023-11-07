@@ -143,7 +143,7 @@ function parseCurserArgs(options: ResolveOffsetConnectionOptions) {
     throw new Error('Argument "last" must be a non-negative integer')
 
   const limit = Math.min(first ?? last ?? defaultSize, maxSize) + 1
-  const inverted = after ? !!last && !first : (!!before && !first) || (!first && !!last)
+  const inverted = after ? (!!last && !first) : (!!before && !first) || (!first && !!last) || (!!before && !!last)
 
   return {
     before: before ?? undefined,
