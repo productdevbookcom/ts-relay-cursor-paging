@@ -136,6 +136,9 @@ function parseCurserArgs(options: ResolveOffsetConnectionOptions) {
   const defaultSize = options.defaultSize ?? DEFAULT_SIZE
   const maxSize = options.maxSize ?? DEFAULT_MAX_SIZE
 
+  if (before && after)
+    throw new Error('Arguments "before" and "after" cannot be used together')
+
   if (first != null && first < 0)
     throw new Error('Argument "first" must be a non-negative integer')
 
