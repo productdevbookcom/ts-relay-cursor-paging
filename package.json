@@ -43,10 +43,11 @@
     "dev": "tsup --watch",
     "prepublishOnly": "pnpm run build",
     "release": "pnpm build && bumpp --commit --push --tag && pnpm publish",
-    "lint": "eslint . --cache",
+    "lint": "eslint . --cache && pnpm typecheck",
     "lint:fix": "eslint . --cache --fix",
     "test": "vitest",
     "test:watch": "vitest --watch",
+    "typecheck": "tsc --noEmit",
     "coverage": "vitest run --coverage"
   },
   "peerDependencies": {
