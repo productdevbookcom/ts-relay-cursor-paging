@@ -56,6 +56,7 @@ export const schema = createSchema({
       libraries: async (_parent, _args, _context, _info) => {
         const generator = datasLine()
 
+        // eslint-disable-next-line style/member-delimiter-style
         async function resolveData({ offset, limit }: { offset: number; limit: number }) {
           const slicedData = generator.slice(offset, offset + limit)
           return slicedData

@@ -14,6 +14,5 @@ export default <Options>{
   sourcemap: true,
   clean: true,
   dts: true,
-  minify: true,
   external,
 }

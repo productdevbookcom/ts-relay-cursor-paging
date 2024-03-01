@@ -17,7 +17,6 @@ Simple relay cursor paging for graphql
 pnpm add ts-relay-cursor-paging
 ```
 
-
 ## Demo
 
 Open graphql playground in your browser port 4000/graphql
@@ -154,7 +153,7 @@ export const schema = createSchema({
       libraries: async (_parent, _args, _context, _info) => {
         const generator = datasLine()
 
-        async function resolveData({ offset, limit }: { offset: number; limit: number }) {
+        async function resolveData({ offset, limit }: { offset: number, limit: number }) {
           const slicedData = generator.slice(offset, offset + limit)
           return slicedData
         }
@@ -205,7 +204,6 @@ Codes in this build are inspired by [pothos](https://github.com/hayes/pothos) an
     <img alt="sponsors" src='https://cdn.jsdelivr.net/gh/oku-ui/static/sponsors/sponsors.svg'/>
   </a>
 </p>
-
 
  ## License
 
