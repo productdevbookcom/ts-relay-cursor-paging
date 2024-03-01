@@ -45,7 +45,7 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       graphql-yoga:
-        specifier: ^5.0.0
+        specifier: ^5.1.1
         version: 5.1.1(graphql@16.8.1)
       ts-relay-cursor-paging:
         specifier: workspace:^
