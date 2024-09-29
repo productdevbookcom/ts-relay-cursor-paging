@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "esno": "^4.0.0",
+    "esno": "^4.8.0",
     "graphql-yoga": "^5.1.1",
     "ts-relay-cursor-paging": "workspace:^"
   }
